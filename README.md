@@ -1,5 +1,5 @@
 # s2-m98be-frontend
-![license MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square) ![preact](https://img.shields.io/badge/Front--end-preact-673ab8.svg?style=flat-square)
+![license MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square) ![preact](https://img.shields.io/badge/Front--end-preact-673ab8.svg?style=flat-square) ![Firebase](https://img.shields.io/badge/Server-Cloud%20Functions%20%2F%20Storage%20for%20Firebase-f57c00.svg?style=flat-square)
 
 ## Differential Loading!  
 今回の実装では、中途半端に古いブラウザ切り捨てて、モダン環境側からcore-jsを剥がしてみた  
