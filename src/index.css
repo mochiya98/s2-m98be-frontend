@@ -1,0 +1,43 @@
+*{margin:0;padding:0}
+html,body{height:100%;}
+@font-face {
+  font-family: 'Material Icons';
+  font-display: block;
+}
+.progress{width:400px;max-width:400px;height:25px;font-size:0;line-height:0;border:1px solid #333;}
+.progress__bar{height:100%;box-sizing:border-box;border:2px solid #fff;}
+.progress--active .progress__bar{
+width:100%;background-size: 100% 1px;
+background-image:linear-gradient(-90deg, #fff 70%, #333 70%, #333);
+animation: cssProgressActive 1.5s linear infinite
+}
+.progress__bar{background-color:#333;}
+
+.app{color:#222;font-family:"Noto Sans";}
+.app,.dropzone,.upload-layout-box{height:100%;}
+.dropzone,.upload-layout-box{display:flex;justify-content:center;align-items:center;}
+.dropzone{text-align:center;box-sizing:border-box;border:10px dashed transparent;}
+.dropzone--active{background-color:#ddd;border-color:#888;}
+.logo-icon{font-size:96px;}
+
+.upload-info-box{margin:10px;position:relative;top:0;left:0;overflow:hidden;display:inline-block;}
+.upload-progress-box{line-height:1.2;transition:opacity .3s ease,visibility .3s ease;}
+.upload-progress-box--hide{opacity:0;visibility:hidden;}
+.upload-progress-desc{padding:5px;position:relative;top:0;left:0;padding-left:53px;}
+.upload-progress-desc i{display:block;position:absolute;top:50%;left:0px;padding:6px;font-size:36px;line-height:1;margin-top:-24px;}
+.upload-progress-desc__title{font-size:18px;line-height:20px;}
+.upload-progress-desc__desc{color:#666;font-size:12px;line-height:18px;}
+
+.upload-result-box{position:absolute;top:100%;left:0;width:100%;text-align:center;transition:top .5s cubic-bezier(0.075, 0.82, 0.165, 1);}
+.upload-result-box .url,.upload-result-box .url a{line-height:59px;font-size:50px;color:inherit;}
+.upload-result-box .desc{line-height:16px;font-size:12px;color:#666;}
+.upload-result-box--visible{top:0;}
+
+@keyframes cssProgressActive {
+	0% {
+		background-position:0% 0px;
+	}
+	100% {
+		background-position:400px 0px;
+	}
+}
