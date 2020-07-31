@@ -1,5 +1,4 @@
-export const API_BASE_URL =
-  "https://asia-northeast1-s2-m98be.cloudfunctions.net";
+export const API_BASE_URL = "https://s2-m98.netlify.app/.netlify/functions";
 
 export const FIREBASE_CONFIG = {
   apiKey: "",
@@ -8,5 +7,5 @@ export const FIREBASE_CONFIG = {
   projectId: "",
   storageBucket: "",
   messagingSenderId: "",
-  appId: ""
+  appId: "",
 };
