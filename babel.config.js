@@ -6,9 +6,9 @@ module.exports = {
           "@babel/preset-react",
           {
             pragma: "React.createElement", // default pragma is React.createElement
-            pragmaFrag: "React.Fragment" // default is React.Fragment
+            pragmaFrag: "React.Fragment", // default is React.Fragment
             //"throwIfNamespace": false // defaults to true
-          }
+          },
         ],
         [
           "@babel/preset-env",
@@ -16,14 +16,14 @@ module.exports = {
             loose: true,
             useBuiltIns: "usage",
             modules: false,
-            corejs: 3
-          }
-        ]
+            corejs: 3,
+          },
+        ],
       ],
       plugins: [
-        "@babel/plugin-proposal-class-properties",
-        "@babel/plugin-syntax-dynamic-import"
-      ]
+        ["@babel/plugin-proposal-class-properties", { loose: true }],
+        "@babel/plugin-syntax-dynamic-import",
+      ],
     },
     modern: {
       presets: [
@@ -31,9 +31,9 @@ module.exports = {
           "@babel/preset-react",
           {
             pragma: "React.createElement", // default pragma is React.createElement
-            pragmaFrag: "React.Fragment" // default is React.Fragment
+            pragmaFrag: "React.Fragment", // default is React.Fragment
             //"throwIfNamespace": false // defaults to true
-          }
+          },
         ],
         [
           "@babel/preset-env",
@@ -41,16 +41,16 @@ module.exports = {
             loose: true,
             useBuiltIns: false,
             targets: {
-              esmodules: true
-            }
+              esmodules: true,
+            },
             //corejs: 3,
-          }
-        ]
+          },
+        ],
       ],
       plugins: [
-        "@babel/plugin-proposal-class-properties",
-        "@babel/plugin-syntax-dynamic-import"
-      ]
-    }
-  }
+        ["@babel/plugin-proposal-class-properties", { loose: true }],
+        "@babel/plugin-syntax-dynamic-import",
+      ],
+    },
+  },
 };

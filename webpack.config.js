@@ -13,27 +13,27 @@ const genConfig = (modernMode, mode) => {
     mode,
     entry: {
       modern: "./src/index.js",
-      legacy: ["./src/legacy-polyfills.js", "./src/index.js"]
+      legacy: ["./src/legacy-polyfills.js", "./src/index.js"],
     }[modernMode],
     output: {
       path: path.join(__dirname, "dist"),
       filename: `./app.${modernMode}.js`,
-      chunkFilename: `chunk/[name].${modernMode}.js`
+      chunkFilename: `chunk/[name].${modernMode}.js`,
     },
     devServer: {
       contentBase: path.join(__dirname, "dist"),
       compress: true,
       port: 3000,
-      watchContentBase: true
+      watchContentBase: true,
     },
     plugins: [
       new HtmlWebpackPlugin({
         inject: false,
         template: "./src/index.ejs",
-        title: "s2.m98.be"
+        title: "s2.m98.be",
       }),
       new HtmlWebpackMultiBuildPlugin(),
-      new webpack.EnvironmentPlugin(["NODE_ENV"])
+      new webpack.EnvironmentPlugin(["NODE_ENV"]),
     ],
     devtool: "source-map",
     module: {
@@ -43,33 +43,43 @@ const genConfig = (modernMode, mode) => {
           loader: "babel-loader",
           exclude: /node_modules/,
           options: {
-            ...babelConfig.env[modernMode]
-          }
+            ...babelConfig.env[modernMode],
+          },
         },
         {
           test: /\.css$/,
-          use: ["style-loader", "css-loader"]
-        }
-      ]
+          use: ["style-loader", "css-loader"],
+        },
+      ],
     },
     resolve: {
       extensions: [".js", ".jsx"],
       alias: {
         react: "preact/compat",
-        "react-dom": "preact/compat"
-      }
+        "react-dom": "preact/compat",
+      },
     },
     optimization: {
       splitChunks: false,
       minimizer: [
         new TerserWebpackPlugin({
-          extractComments: /(?:^(?:\**!|@preserve|@license|@cc_on))|license|copyright/i
-        })
-      ]
+          cache: true,
+          parallel: true,
+          extractComments: /(?:^(?:\**!|@preserve|@license|@cc_on))|license|copyright/i,
+
+          terserOptions: {
+            mangle: {
+              properties: {
+                regex: /^(?:MODE_(?:IDLE|WAITING_FIREBASE|WAITING_TOKEN|UPLOADING|MODE_WAITING_S|MODE_COMPLETED))$/,
+              },
+            },
+          },
+        }),
+      ],
     },
     stats: {
-      excludeModules: [/\(webpack\)|lodash/]
-    }
+      excludeModules: [/\(webpack\)|lodash/],
+    },
   };
   if (mode === "development") {
     //config = merge(config, { optimization: { concatenateModules: false } });
@@ -82,9 +92,9 @@ const genConfig = (modernMode, mode) => {
           openAnalyzer: false,
           generateStatsFile: true,
           reportFilename: `report.${modernMode}.html`,
-          statsFilename: `stats.${modernMode}.json`
-        })
-      ]
+          statsFilename: `stats.${modernMode}.json`,
+        }),
+      ],
     });
   }
   return config;

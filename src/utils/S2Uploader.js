@@ -14,8 +14,9 @@ const firebaseToolsLoader = import(
 
 if (~~(Math.random() * 10) === 7) fetch(`${API_BASE_URL}/runCleanJob`);
 
-const tokenLoader = fetch(`${API_BASE_URL}/generateUploadToken`)
-  .then(r => r.json());
+const tokenLoader = fetch(`${API_BASE_URL}/generateUploadToken`, {
+  method: "POST",
+}).then((r) => r.json());
 /*
 let tokenLoader = {
   result: {
@@ -66,7 +67,7 @@ export class S2Uploader {
       mimeType: null,
       prettierBytes: null,
       fileName: "",
-      url: ""
+      url: "",
     };
   }
   setOnUpdateState(onUpdateState) {
@@ -80,7 +81,7 @@ export class S2Uploader {
         mode: S2Uploader.MODE_WAITING_FIREBASE,
         data,
         fileName,
-        mimeType
+        mimeType,
       })
     );
     const { firebase, prettierBytes } = await firebaseToolsLoader;
@@ -88,7 +89,7 @@ export class S2Uploader {
       (this.state = {
         ...this.state,
         mode: S2Uploader.MODE_WAITING_TOKEN,
-        prettierBytes
+        prettierBytes,
       })
     );
     await getToken();
@@ -98,12 +99,12 @@ export class S2Uploader {
       contentDisposition: `attachment; filename="${fileName}"; filename*=utf-8''${encodeURIComponent(
         fileName
       )}`,
-      contentType: mimeType
+      contentType: mimeType,
     });
     await new Promise((uploaded, onErr) => {
       uploadTask.on(
         "state_changed",
-        snapshot => {
+        (snapshot) => {
           //console.log(snapshot.bytesTransferred , snapshot.totalBytes);
           const progress = snapshot.bytesTransferred / snapshot.totalBytes;
           this.onUpdateState(
@@ -112,7 +113,7 @@ export class S2Uploader {
               mode: S2Uploader.MODE_UPLOADING,
               progress,
               bytesTransferred: snapshot.bytesTransferred,
-              totalBytes: snapshot.totalBytes
+              totalBytes: snapshot.totalBytes,
             })
           );
         },
@@ -124,23 +125,25 @@ export class S2Uploader {
       (this.state = {
         ...this.state,
         mode: S2Uploader.MODE_WAITING_S,
-        progress: 1
+        progress: 1,
       })
     );
     const dlURL = `${API_BASE_URL}/downloadFile?file_id=${fileID}`;
-    const { id, hash } = await callSAPI({ q: dlURL }).then(r => r.json());
+    const { id, hash } = await callSAPI({ q: dlURL }).then((r) => r.json());
     const idText = ("00" + id).slice(-3);
     const sURL = `https://m98.be/${idText}`;
     this.onUpdateState(
       (this.state = {
         ...this.state,
         mode: S2Uploader.MODE_COMPLETED,
-        url: sURL
+        url: sURL,
       })
     );
     setInterval(() => {
       callSAPI({ id, hash });
-      fetch(`${API_BASE_URL}/extendExpirationTime?file_id=${fileID}`);
+      fetch(`${API_BASE_URL}/extendExpirationTime?file_id=${fileID}`, {
+        method: "POST",
+      });
     }, 1000 * 60);
     await firebase.auth().signOut();
   }

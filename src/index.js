@@ -7,13 +7,13 @@ import React, {
   useRef,
   useState,
   createContext,
-  useEffect
+  useEffect,
 } from "react";
 
 import {
   S2Uploader,
   S2UploaderProvider,
-  useS2Uploader
+  useS2Uploader,
 } from "./utils/S2Uploader";
 import UploadProgressView from "./components/UploadProgressView";
 import S2Dropzone from "./components/S2Dropzone";
@@ -26,13 +26,13 @@ function AppView() {
     totalBytes,
     url,
     fileName,
-    prettierBytes
+    prettierBytes,
   } = useS2Uploader();
 
   useEffect(() => {
     if (!url) return;
     document.title = `${url.replace(/^[a-zA-Z]+:\/\//, "")} - s2.m98.be`;
-    const onBeforeUnload = function(e) {
+    const onBeforeUnload = function (e) {
       e.preventDefault();
       e.returnValue = "";
     };
@@ -40,7 +40,7 @@ function AppView() {
     return () => window.removeEventListener("beforeunload", onBeforeUnload);
   }, [url]);
 
-  const preventDefaultCallback = useCallback(e => {
+  const preventDefaultCallback = useCallback((e) => {
     e.preventDefault();
   }, []);
 
